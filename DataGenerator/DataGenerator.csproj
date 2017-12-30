@@ -56,7 +56,6 @@
     <Compile Include="Generator\Companies\CompaniesGenerator.cs" />
     <Compile Include="Generator\Companies\CompanyNameGenerator.cs" />
     <Compile Include="Generator\Conferences\ConferenceGenerator.cs" />
-    <Compile Include="Generator\DataContextExtension.cs" />
     <Compile Include="Generator\Dates\DateGenerator.cs" />
     <Compile Include="Generator\Dates\DatePeriod.cs" />
     <Compile Include="Generator\Emails\EmailGenerator.cs" />
