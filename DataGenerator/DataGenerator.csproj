@@ -70,6 +70,7 @@
     <Compile Include="Generator\Numbers\PESELOrPassportGenerator.cs" />
     <Compile Include="Generator\Numbers\PhoneGenerator.cs" />
     <Compile Include="Generator\Numbers\StudentCradNumberGenerator.cs" />
+    <Compile Include="Generator\Orders\OrdersGeneratorCore.cs" />
     <Compile Include="Generator\Participants\ParticipantsStudCardsGenerator.cs" />
     <Compile Include="Generator\People\PeopleGenerator.cs" />
     <Compile Include="Generator\People\PersonNameSurname.cs" />

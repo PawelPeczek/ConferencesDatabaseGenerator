@@ -64,9 +64,9 @@ namespace DataGenerator.Generator {
                     GenerateWholeBatchOfConf();
                     //compGen.GenerateCompaniesClients(NUMBER_OF_COMPANIES);
                     //Console.WriteLine("DONE!");
-                    icGen.GenerateIndividualCustomers(NUMBER_OF_INDIV_CLIENTS);
-                    Console.WriteLine("Computation individual clients done!");
-                    Console.WriteLine("DONE!");
+                    //icGen.GenerateIndividualCustomers(NUMBER_OF_INDIV_CLIENTS);
+                    //Console.WriteLine("Computation individual clients done!");
+                    //Console.WriteLine("DONE!");
                     //int PartPerComp = (NUMBER_OF_PARTICIP - NUMBER_OF_INDIV_CLIENTS) / NUMBER_OF_COMPANIES;
                     //compEmpGen.GenerateEmployeesForCompanies(PartPerComp, NUMBER_OF_STUD_PER_COPM);
                     //Console.WriteLine("Computations done!");

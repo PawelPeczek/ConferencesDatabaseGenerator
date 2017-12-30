@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.Dates {
     class DateGenerator {
+        private Random rnd = new Random(Guid.NewGuid().GetHashCode());
         public DateTime GenerateDateBeforeGiven(DateTime endDate) {
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             return endDate.AddDays(-1 * rnd.Next(0, 61));
         }
         /*
@@ -19,7 +19,6 @@ namespace DataGenerator.Generator.Dates {
             if (monthInterval * numbOfPeriods > diff)
                 throw new InvalidOperationException("Unable to generate so much periods from so shord date range");
             // choosing slots
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             int[] slots = Enumerable
                 .Range(0, diff / monthInterval)
                 .OrderBy(i => rnd.Next()).Take(numbOfPeriods).ToArray();
