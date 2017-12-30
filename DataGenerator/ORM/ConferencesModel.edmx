@@ -1,0 +1,1872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ppeczek_aModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Password" Type="varbinary" MaxLength="64" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompDetails">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Fax" Type="varchar" MaxLength="16" />
+          <Property Name="NIP" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="ContactPersonName" Type="varchar" MaxLength="32" />
+          <Property Name="ContactPersonSurname" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Conferences">
+          <Key>
+            <PropertyRef Name="ConfID" />
+          </Key>
+          <Property Name="ConfID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfName" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="ConfTopic" Type="varchar" MaxLength="256" />
+          <Property Name="ConfDescription" Type="varchar" MaxLength="512" />
+          <Property Name="StudentDiscount" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DaysOfConf">
+          <Key>
+            <PropertyRef Name="DayOfConfID" />
+          </Key>
+          <Property Name="DayOfConfID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="SpaceLimit" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IndividualsDetails">
+          <Key>
+            <PropertyRef Name="ClientID" />
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="DateOfBook" Type="date" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdersOnConfDays">
+          <Key>
+            <PropertyRef Name="OrdOnConfDayID" />
+          </Key>
+          <Property Name="OrdOnConfDayID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayOfConfID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="NumberOfRegularSeats" Type="smallint" Nullable="false" />
+          <Property Name="NumberOfStudentSeats" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ParticipantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PESEL" Type="varchar" MaxLength="11" />
+          <Property Name="Name" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipantsAtWorkshops">
+          <Key>
+            <PropertyRef Name="EntryID" />
+            <PropertyRef Name="WorkshopSubOrderID" />
+          </Key>
+          <Property Name="EntryID" Type="int" Nullable="false" />
+          <Property Name="WorkshopSubOrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipantsDetails">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipAtConfDay">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="OrdOnConfDayID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipRegByClients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="AccountNumber" Type="varchar" MaxLength="28" Nullable="false" />
+          <Property Name="TitleOfPayment" Type="varchar" MaxLength="140" Nullable="false" />
+          <Property Name="TransferSender" Type="varchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceThresholds">
+          <Key>
+            <PropertyRef Name="ThresholdID" />
+          </Key>
+          <Property Name="ThresholdID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayOfConfID" Type="int" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentCards">
+          <Key>
+            <PropertyRef Name="StudentCardID" />
+          </Key>
+          <Property Name="StudentCardID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="StudentCardNumber" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="FromDate" Type="date" Nullable="false" />
+          <Property Name="ToDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="SysInfo">
+          <Key>
+            <PropertyRef Name="SettingID" />
+          </Key>
+          <Property Name="SettingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastUpdate" Type="date" />
+        </EntityType>
+        <EntityType Name="Workshops">
+          <Key>
+            <PropertyRef Name="WorkshopID" />
+          </Key>
+          <Property Name="WorkshopID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayOfConfID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="TeacherName" Type="varchar" MaxLength="32" />
+          <Property Name="TeacherSurname" Type="varchar" MaxLength="32" />
+          <Property Name="Value" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="0" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="0" Nullable="false" />
+          <Property Name="SpaceLimit" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkshopsSubOrders">
+          <Key>
+            <PropertyRef Name="WorkshopSubOrderID" />
+          </Key>
+          <Property Name="WorkshopSubOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkshopID" Type="int" Nullable="false" />
+          <Property Name="OrdOnConfDayID" Type="int" Nullable="false" />
+          <Property Name="NumberOfSeats" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CompDetails_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="CompDetails" Type="Self.CompDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="CompDetails">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaysOfConf_Conferences">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="ConfID" />
+            </Principal>
+            <Dependent Role="DaysOfConf">
+              <PropertyRef Name="ConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndividualsDetails_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="IndividualsDetails" Type="Self.IndividualsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="IndividualsDetails">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndividualsDetails_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="IndividualsDetails" Type="Self.IndividualsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="IndividualsDetails">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersOnConfDays_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="OrdersOnConfDays">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersOnConfDays_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrdersOnConfDays">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantsAtWorkshops_ParticipAtConfDay">
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="1" />
+          <End Role="ParticipantsAtWorkshops" Type="Self.ParticipantsAtWorkshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParticipAtConfDay">
+              <PropertyRef Name="EntryID" />
+            </Principal>
+            <Dependent Role="ParticipantsAtWorkshops">
+              <PropertyRef Name="EntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantsAtWorkshops_WorkshopsSubOrders">
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="1" />
+          <End Role="ParticipantsAtWorkshops" Type="Self.ParticipantsAtWorkshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkshopsSubOrders">
+              <PropertyRef Name="WorkshopSubOrderID" />
+            </Principal>
+            <Dependent Role="ParticipantsAtWorkshops">
+              <PropertyRef Name="WorkshopSubOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantsDetails_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="ParticipantsDetails" Type="Self.ParticipantsDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipantsDetails">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipAtConfDay_OrdersOnConfDays">
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="1" />
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersOnConfDays">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Principal>
+            <Dependent Role="ParticipAtConfDay">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipAtConfDay_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipAtConfDay">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipRegByClients_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="ParticipRegByClients" Type="Self.ParticipRegByClients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ParticipRegByClients">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipRegByClients_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="ParticipRegByClients" Type="Self.ParticipRegByClients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipRegByClients">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceThresholds_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="PriceThresholds" Type="Self.PriceThresholds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="PriceThresholds">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCards_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="StudentCards" Type="Self.StudentCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="StudentCards">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workshops_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="Workshops" Type="Self.Workshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="Workshops">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopsSubOrders_OrdersOnConfDays">
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="1" />
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersOnConfDays">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Principal>
+            <Dependent Role="WorkshopsSubOrders">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopsSubOrders_Workshops">
+          <End Role="Workshops" Type="Self.Workshops" Multiplicity="1" />
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshops">
+              <PropertyRef Name="WorkshopID" />
+            </Principal>
+            <Dependent Role="WorkshopsSubOrders">
+              <PropertyRef Name="WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AssignParticipantAtConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrdOnConfDayID" Type="int" Mode="In" />
+          <Parameter Name="ParticipantID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AssignParticipantsAtConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrdOnConfDayID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AssignParticipantsAtWorkshops" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="AssignParticipantToWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntryID" Type="int" Mode="In" />
+          <Parameter Name="WorkshopSubOrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AssociateStudentCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParticipantID" Type="int" Mode="In" />
+          <Parameter Name="StudentCardNumber" Type="varchar" Mode="In" />
+          <Parameter Name="FromDate" Type="date" Mode="In" />
+          <Parameter Name="ToDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="BatchCreateCompanyCust" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="BatchCreateIndivudualCust" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="BatchInsertPayments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ChangeCompanyClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="Login" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyName" Type="varchar" Mode="In" />
+          <Parameter Name="Fax" Type="varchar" Mode="In" />
+          <Parameter Name="NIP" Type="varchar" Mode="In" />
+          <Parameter Name="ContactPersonName" Type="varchar" Mode="In" />
+          <Parameter Name="ContactPersonSurname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ChangeIndivClientData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="Login" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="PESEL" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Surname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ChangeNumbOfSeatsAtOrdOnConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrdOnConfDay" Type="int" Mode="In" />
+          <Parameter Name="NumberOfRegSeats" Type="smallint" Mode="In" />
+          <Parameter Name="NumberOfStudentsSeats" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="ChangeNumbOfSeatsAtWorkshopSubOrd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WorkshopSubOrderID" Type="int" Mode="In" />
+          <Parameter Name="NumberOfSeats" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="ChangeParticipantData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParticipantID" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PESEL" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Surname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ChangeStatusOfOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="CreateCompanyClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Login" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyName" Type="varchar" Mode="In" />
+          <Parameter Name="Fax" Type="varchar" Mode="In" />
+          <Parameter Name="NIP" Type="varchar" Mode="In" />
+          <Parameter Name="ContactPersonName" Type="varchar" Mode="In" />
+          <Parameter Name="ContactPersonSurname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CreateConference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConfName" Type="varchar" Mode="In" />
+          <Parameter Name="ConfTopic" Type="varchar" Mode="In" />
+          <Parameter Name="ConfDescription" Type="varchar" Mode="In" />
+          <Parameter Name="StudentDiscount" Type="real" Mode="In" />
+        </Function>
+        <Function Name="CreateDayOfConf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConfID" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+          <Parameter Name="SpaceLimit" Type="smallint" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="CreateIndivudualCust" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Login" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="PESEL" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Surname" Type="varchar" Mode="In" />
+          <Parameter Name="StudentCardNumber" Type="varchar" Mode="In" />
+          <Parameter Name="FromDate" Type="date" Mode="In" />
+          <Parameter Name="ToDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="CreateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="DateOfBook" Type="date" Mode="In" />
+          <Parameter Name="DayOfConfID" Type="int" Mode="In" />
+          <Parameter Name="NumberOfRegularSeats" Type="smallint" Mode="In" />
+          <Parameter Name="NumberOfStudentSeats" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="CreateOrderBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="DateOfBook" Type="date" Mode="In" />
+        </Function>
+        <Function Name="CreatePriceThreshold" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConfDayID" Type="int" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="CreateWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DayOfConfID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+          <Parameter Name="StartTime" Type="time" Mode="In" />
+          <Parameter Name="EndTime" Type="time" Mode="In" />
+          <Parameter Name="SpaceLimit" Type="smallint" Mode="In" />
+          <Parameter Name="TeacherName" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherSurname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DayOfConfID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrdOnConfDayFromOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrdOnConfDayID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteParticipantByClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="ParticipantID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteParticipantFromConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntryID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteParticipantFromWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntryID" Type="int" Mode="In" />
+          <Parameter Name="WorkshopSubOrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteStudentCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentCardID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WorkshopID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteWorkshopSubOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WorkshopSubOrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EditConference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConfID" Type="int" Mode="In" />
+          <Parameter Name="ConfName" Type="varchar" Mode="In" />
+          <Parameter Name="ConfTopic" Type="varchar" Mode="In" />
+          <Parameter Name="ConfDescription" Type="varchar" Mode="In" />
+          <Parameter Name="StudentDiscount" Type="real" Mode="In" />
+        </Function>
+        <Function Name="EditDayOfConf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DayOfConfID" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+          <Parameter Name="SpaceLimit" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="EditPriceThreshold" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PriceThresholdID" Type="int" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="EditWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WorkshopID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+          <Parameter Name="StartTime" Type="time" Mode="In" />
+          <Parameter Name="EndTime" Type="time" Mode="In" />
+          <Parameter Name="SpaceLimit" Type="smallint" Mode="In" />
+          <Parameter Name="TeacherName" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherSurname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="FreeSpaceAtConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="ConfDayID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FreeSpaceAtWorkshop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="WorkshopID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetValueOfAllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="OrderID" Type="int" />
+                <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="InsertParticipant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="PESEL" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Surname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertPayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="Value" Type="decimal" Mode="In" />
+          <Parameter Name="AccountNumber" Type="varchar" Mode="In" />
+          <Parameter Name="TitleOfPayment" Type="varchar" Mode="In" />
+          <Parameter Name="TransferSender" Type="varchar" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="InsertWorkshopSubOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderOnConfDayID" Type="int" Mode="In" />
+          <Parameter Name="WorkshopID" Type="int" Mode="In" />
+          <Parameter Name="NumberOfSeats" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="InsertWorkshopSubOrderBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderOnConfDayID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="NumberOfParticipantsAssignedOnConfDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="ConfDayID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="NumOfParticipAssignOnConfDayByOrderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="DayOfConfID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ShowOrdersStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="OrderID" Type="int" />
+                <Property Name="ClientID" Type="int" />
+                <Property Name="Name" Type="varchar" MaxLength="128" />
+                <Property Name="DateOfBook" Type="date" />
+                <Property Name="Status" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="StatsOnConference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConferenceID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ConfID" Type="int" />
+                <Property Name="ConfName" Type="varchar" MaxLength="120" />
+                <Property Name="Date" Type="date" />
+                <Property Name="PercOccupConf" Type="real" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="StatsOnConferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ConfID" Type="int" />
+                <Property Name="ConfName" Type="varchar" MaxLength="120" />
+                <Property Name="Date" Type="date" />
+                <Property Name="PercOccupConf" Type="real" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="StatsOnWorkshopsAtConference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ConferenceID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ConfID" Type="int" />
+                <Property Name="ConfName" Type="varchar" MaxLength="120" />
+                <Property Name="Date" Type="date" />
+                <Property Name="WorkshopName" Type="varchar" MaxLength="120" />
+                <Property Name="PercOccupWorkshop" Type="real" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="UpdateOrderStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateSysInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ppeczek_aModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompDetails" EntityType="Self.CompDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conferences" EntityType="Self.Conferences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DaysOfConf" EntityType="Self.DaysOfConf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IndividualsDetails" EntityType="Self.IndividualsDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdersOnConfDays" EntityType="Self.OrdersOnConfDays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantsAtWorkshops" EntityType="Self.ParticipantsAtWorkshops" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantsDetails" EntityType="Self.ParticipantsDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipAtConfDay" EntityType="Self.ParticipAtConfDay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipRegByClients" EntityType="Self.ParticipRegByClients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PriceThresholds" EntityType="Self.PriceThresholds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentCards" EntityType="Self.StudentCards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysInfo" EntityType="Self.SysInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workshops" EntityType="Self.Workshops" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkshopsSubOrders" EntityType="Self.WorkshopsSubOrders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompDetails_Clients" Association="Self.FK_CompDetails_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="CompDetails" EntitySet="CompDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaysOfConf_Conferences" Association="Self.FK_DaysOfConf_Conferences">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndividualsDetails_Clients" Association="Self.FK_IndividualsDetails_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="IndividualsDetails" EntitySet="IndividualsDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndividualsDetails_Participants" Association="Self.FK_IndividualsDetails_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="IndividualsDetails" EntitySet="IndividualsDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersOnConfDays_DaysOfConf" Association="Self.FK_OrdersOnConfDays_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersOnConfDays_Orders" Association="Self.FK_OrdersOnConfDays_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantsAtWorkshops_ParticipAtConfDay" Association="Self.FK_ParticipantsAtWorkshops_ParticipAtConfDay">
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+            <End Role="ParticipantsAtWorkshops" EntitySet="ParticipantsAtWorkshops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantsAtWorkshops_WorkshopsSubOrders" Association="Self.FK_ParticipantsAtWorkshops_WorkshopsSubOrders">
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+            <End Role="ParticipantsAtWorkshops" EntitySet="ParticipantsAtWorkshops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantsDetails_Participants" Association="Self.FK_ParticipantsDetails_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="ParticipantsDetails" EntitySet="ParticipantsDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipAtConfDay_OrdersOnConfDays" Association="Self.FK_ParticipAtConfDay_OrdersOnConfDays">
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipAtConfDay_Participants" Association="Self.FK_ParticipAtConfDay_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipRegByClients_Clients" Association="Self.FK_ParticipRegByClients_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ParticipRegByClients" EntitySet="ParticipRegByClients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipRegByClients_Participants" Association="Self.FK_ParticipRegByClients_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="ParticipRegByClients" EntitySet="ParticipRegByClients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Orders" Association="Self.FK_Payments_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceThresholds_DaysOfConf" Association="Self.FK_PriceThresholds_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="PriceThresholds" EntitySet="PriceThresholds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCards_Participants" Association="Self.FK_StudentCards_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="StudentCards" EntitySet="StudentCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workshops_DaysOfConf" Association="Self.FK_Workshops_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="Workshops" EntitySet="Workshops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopsSubOrders_OrdersOnConfDays" Association="Self.FK_WorkshopsSubOrders_OrdersOnConfDays">
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopsSubOrders_Workshops" Association="Self.FK_WorkshopsSubOrders_Workshops">
+            <End Role="Workshops" EntitySet="Workshops" />
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ppeczek_aModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="GetValueOfAllOrders_Result">
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="ShowOrdersStatus_Result">
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBook" Type="DateTime" />
+          <Property Name="Status" Type="Boolean" />
+        </ComplexType>
+        <ComplexType Name="StatsOnConference_Result">
+          <Property Name="ConfID" Type="Int32" />
+          <Property Name="ConfName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="PercOccupConf" Type="Single" />
+        </ComplexType>
+        <ComplexType Name="StatsOnConferences_Result">
+          <Property Name="ConfID" Type="Int32" />
+          <Property Name="ConfName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="PercOccupConf" Type="Single" />
+        </ComplexType>
+        <ComplexType Name="StatsOnWorkshopsAtConference_Result">
+          <Property Name="ConfID" Type="Int32" />
+          <Property Name="ConfName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="WorkshopName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="PercOccupWorkshop" Type="Single" />
+        </ComplexType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="Binary" MaxLength="64" FixedLength="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Clients" FromRole="Clients" ToRole="Orders" />
+          <NavigationProperty Name="Participants" Relationship="Self.IndividualsDetails" FromRole="Clients" ToRole="Participants" />
+          <NavigationProperty Name="ParticipantsReg" Relationship="Self.ParticipRegByClients" FromRole="Clients" ToRole="Participants" />
+        </EntityType>
+        <EntityType Name="CompDetails" BaseType="ppeczek_aModel.Clients">
+          <Property Name="CompanyName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fax" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="NIP" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactPersonName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ContactPersonSurname" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Conferences">
+          <Key>
+            <PropertyRef Name="ConfID" />
+          </Key>
+          <Property Name="ConfID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConfTopic" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ConfDescription" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="StudentDiscount" Type="Single" Nullable="false" />
+          <NavigationProperty Name="DaysOfConf" Relationship="Self.FK_DaysOfConf_Conferences" FromRole="Conferences" ToRole="DaysOfConf" />
+        </EntityType>
+        <EntityType Name="DaysOfConf">
+          <Key>
+            <PropertyRef Name="DayOfConfID" />
+          </Key>
+          <Property Name="DayOfConfID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SpaceLimit" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Conferences" Relationship="Self.FK_DaysOfConf_Conferences" FromRole="DaysOfConf" ToRole="Conferences" />
+          <NavigationProperty Name="OrdersOnConfDays" Relationship="Self.FK_OrdersOnConfDays_DaysOfConf" FromRole="DaysOfConf" ToRole="OrdersOnConfDays" />
+          <NavigationProperty Name="PriceThresholds" Relationship="Self.FK_PriceThresholds_DaysOfConf" FromRole="DaysOfConf" ToRole="PriceThresholds" />
+          <NavigationProperty Name="Workshops" Relationship="Self.FK_Workshops_DaysOfConf" FromRole="DaysOfConf" ToRole="Workshops" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBook" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Orders_Clients" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="OrdersOnConfDays" Relationship="Self.FK_OrdersOnConfDays_Orders" FromRole="Orders" ToRole="OrdersOnConfDays" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Orders" FromRole="Orders" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="OrdersOnConfDays">
+          <Key>
+            <PropertyRef Name="OrdOnConfDayID" />
+          </Key>
+          <Property Name="OrdOnConfDayID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayOfConfID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfRegularSeats" Type="Int16" Nullable="false" />
+          <Property Name="NumberOfStudentSeats" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="DaysOfConf" Relationship="Self.FK_OrdersOnConfDays_DaysOfConf" FromRole="OrdersOnConfDays" ToRole="DaysOfConf" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_OrdersOnConfDays_Orders" FromRole="OrdersOnConfDays" ToRole="Orders" />
+          <NavigationProperty Name="ParticipAtConfDay" Relationship="Self.FK_ParticipAtConfDay_OrdersOnConfDays" FromRole="OrdersOnConfDays" ToRole="ParticipAtConfDay" />
+          <NavigationProperty Name="WorkshopsSubOrders" Relationship="Self.FK_WorkshopsSubOrders_OrdersOnConfDays" FromRole="OrdersOnConfDays" ToRole="WorkshopsSubOrders" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="ParticipantID" />
+          </Key>
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PESEL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ParticipAtConfDay" Relationship="Self.FK_ParticipAtConfDay_Participants" FromRole="Participants" ToRole="ParticipAtConfDay" />
+          <NavigationProperty Name="StudentCards" Relationship="Self.FK_StudentCards_Participants" FromRole="Participants" ToRole="StudentCards" />
+          <NavigationProperty Name="Clients" Relationship="Self.IndividualsDetails" FromRole="Participants" ToRole="Clients" />
+          <NavigationProperty Name="ClientsReg" Relationship="Self.ParticipRegByClients" FromRole="Participants" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="ParticipantsDetails" BaseType="ppeczek_aModel.Participants">
+          <Property Name="Email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipAtConfDay">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <Property Name="OrdOnConfDayID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrdersOnConfDays" Relationship="Self.FK_ParticipAtConfDay_OrdersOnConfDays" FromRole="ParticipAtConfDay" ToRole="OrdersOnConfDays" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK_ParticipAtConfDay_Participants" FromRole="ParticipAtConfDay" ToRole="Participants" />
+          <NavigationProperty Name="WorkshopsSubOrders" Relationship="Self.ParticipantsAtWorkshops" FromRole="ParticipAtConfDay" ToRole="WorkshopsSubOrders" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Value" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="AccountNumber" Type="String" MaxLength="28" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TitleOfPayment" Type="String" MaxLength="140" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TransferSender" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Payments_Orders" FromRole="Payments" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="PriceThresholds">
+          <Key>
+            <PropertyRef Name="ThresholdID" />
+          </Key>
+          <Property Name="ThresholdID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayOfConfID" Type="Int32" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Value" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <NavigationProperty Name="DaysOfConf" Relationship="Self.FK_PriceThresholds_DaysOfConf" FromRole="PriceThresholds" ToRole="DaysOfConf" />
+        </EntityType>
+        <EntityType Name="StudentCards">
+          <Key>
+            <PropertyRef Name="StudentCardID" />
+          </Key>
+          <Property Name="StudentCardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <Property Name="StudentCardNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK_StudentCards_Participants" FromRole="StudentCards" ToRole="Participants" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SysInfo">
+          <Key>
+            <PropertyRef Name="SettingID" />
+          </Key>
+          <Property Name="SettingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Workshops">
+          <Key>
+            <PropertyRef Name="WorkshopID" />
+          </Key>
+          <Property Name="WorkshopID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayOfConfID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeacherName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherSurname" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="SpaceLimit" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="DaysOfConf" Relationship="Self.FK_Workshops_DaysOfConf" FromRole="Workshops" ToRole="DaysOfConf" />
+          <NavigationProperty Name="WorkshopsSubOrders" Relationship="Self.FK_WorkshopsSubOrders_Workshops" FromRole="Workshops" ToRole="WorkshopsSubOrders" />
+        </EntityType>
+        <EntityType Name="WorkshopsSubOrders">
+          <Key>
+            <PropertyRef Name="WorkshopSubOrderID" />
+          </Key>
+          <Property Name="WorkshopSubOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkshopID" Type="Int32" Nullable="false" />
+          <Property Name="OrdOnConfDayID" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfSeats" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="OrdersOnConfDays" Relationship="Self.FK_WorkshopsSubOrders_OrdersOnConfDays" FromRole="WorkshopsSubOrders" ToRole="OrdersOnConfDays" />
+          <NavigationProperty Name="Workshops" Relationship="Self.FK_WorkshopsSubOrders_Workshops" FromRole="WorkshopsSubOrders" ToRole="Workshops" />
+          <NavigationProperty Name="ParticipAtConfDay" Relationship="Self.ParticipantsAtWorkshops" FromRole="WorkshopsSubOrders" ToRole="ParticipAtConfDay" />
+        </EntityType>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaysOfConf_Conferences">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="1" />
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="ConfID" />
+            </Principal>
+            <Dependent Role="DaysOfConf">
+              <PropertyRef Name="ConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersOnConfDays_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="OrdersOnConfDays">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceThresholds_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="PriceThresholds" Type="Self.PriceThresholds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="PriceThresholds">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workshops_DaysOfConf">
+          <End Role="DaysOfConf" Type="Self.DaysOfConf" Multiplicity="1" />
+          <End Role="Workshops" Type="Self.Workshops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfConf">
+              <PropertyRef Name="DayOfConfID" />
+            </Principal>
+            <Dependent Role="Workshops">
+              <PropertyRef Name="DayOfConfID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersOnConfDays_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrdersOnConfDays">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipAtConfDay_OrdersOnConfDays">
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="1" />
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersOnConfDays">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Principal>
+            <Dependent Role="ParticipAtConfDay">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopsSubOrders_OrdersOnConfDays">
+          <End Role="OrdersOnConfDays" Type="Self.OrdersOnConfDays" Multiplicity="1" />
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersOnConfDays">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Principal>
+            <Dependent Role="WorkshopsSubOrders">
+              <PropertyRef Name="OrdOnConfDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipAtConfDay_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="ParticipAtConfDay">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCards_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="StudentCards" Type="Self.StudentCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="ParticipantID" />
+            </Principal>
+            <Dependent Role="StudentCards">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopsSubOrders_Workshops">
+          <End Role="Workshops" Type="Self.Workshops" Multiplicity="1" />
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshops">
+              <PropertyRef Name="WorkshopID" />
+            </Principal>
+            <Dependent Role="WorkshopsSubOrders">
+              <PropertyRef Name="WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IndividualsDetails">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+        </Association>
+        <Association Name="ParticipantsAtWorkshops">
+          <End Role="ParticipAtConfDay" Type="Self.ParticipAtConfDay" Multiplicity="*" />
+          <End Role="WorkshopsSubOrders" Type="Self.WorkshopsSubOrders" Multiplicity="*" />
+        </Association>
+        <Association Name="ParticipRegByClients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ConferencesModelContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Conferences" EntityType="Self.Conferences" />
+          <EntitySet Name="DaysOfConf" EntityType="Self.DaysOfConf" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="OrdersOnConfDays" EntityType="Self.OrdersOnConfDays" />
+          <EntitySet Name="Participants" EntityType="Self.Participants" />
+          <EntitySet Name="ParticipAtConfDay" EntityType="Self.ParticipAtConfDay" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="PriceThresholds" EntityType="Self.PriceThresholds" />
+          <EntitySet Name="StudentCards" EntityType="Self.StudentCards" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="SysInfo" EntityType="Self.SysInfo" />
+          <EntitySet Name="Workshops" EntityType="Self.Workshops" />
+          <EntitySet Name="WorkshopsSubOrders" EntityType="Self.WorkshopsSubOrders" />
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaysOfConf_Conferences" Association="Self.FK_DaysOfConf_Conferences">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersOnConfDays_DaysOfConf" Association="Self.FK_OrdersOnConfDays_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceThresholds_DaysOfConf" Association="Self.FK_PriceThresholds_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="PriceThresholds" EntitySet="PriceThresholds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workshops_DaysOfConf" Association="Self.FK_Workshops_DaysOfConf">
+            <End Role="DaysOfConf" EntitySet="DaysOfConf" />
+            <End Role="Workshops" EntitySet="Workshops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersOnConfDays_Orders" Association="Self.FK_OrdersOnConfDays_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Orders" Association="Self.FK_Payments_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipAtConfDay_OrdersOnConfDays" Association="Self.FK_ParticipAtConfDay_OrdersOnConfDays">
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopsSubOrders_OrdersOnConfDays" Association="Self.FK_WorkshopsSubOrders_OrdersOnConfDays">
+            <End Role="OrdersOnConfDays" EntitySet="OrdersOnConfDays" />
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipAtConfDay_Participants" Association="Self.FK_ParticipAtConfDay_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCards_Participants" Association="Self.FK_StudentCards_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="StudentCards" EntitySet="StudentCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopsSubOrders_Workshops" Association="Self.FK_WorkshopsSubOrders_Workshops">
+            <End Role="Workshops" EntitySet="Workshops" />
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+          </AssociationSet>
+          <AssociationSet Name="IndividualsDetails" Association="Self.IndividualsDetails">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="ParticipantsAtWorkshops" Association="Self.ParticipantsAtWorkshops">
+            <End Role="ParticipAtConfDay" EntitySet="ParticipAtConfDay" />
+            <End Role="WorkshopsSubOrders" EntitySet="WorkshopsSubOrders" />
+          </AssociationSet>
+          <AssociationSet Name="ParticipRegByClients" Association="Self.ParticipRegByClients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <FunctionImport Name="GetValueOfAllOrders" IsComposable="true" ReturnType="Collection(ppeczek_aModel.GetValueOfAllOrders_Result)" />
+          <FunctionImport Name="ShowOrdersStatus" IsComposable="true" ReturnType="Collection(ppeczek_aModel.ShowOrdersStatus_Result)" />
+          <FunctionImport Name="StatsOnConference" IsComposable="true" ReturnType="Collection(ppeczek_aModel.StatsOnConference_Result)">
+            <Parameter Name="ConferenceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StatsOnConferences" IsComposable="true" ReturnType="Collection(ppeczek_aModel.StatsOnConferences_Result)" />
+          <FunctionImport Name="StatsOnWorkshopsAtConference" IsComposable="true" ReturnType="Collection(ppeczek_aModel.StatsOnWorkshopsAtConference_Result)">
+            <Parameter Name="ConferenceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AssignParticipantAtConfDay">
+            <Parameter Name="OrdOnConfDayID" Mode="In" Type="Int32" />
+            <Parameter Name="ParticipantID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AssignParticipantsAtConfDay">
+            <Parameter Name="OrdOnConfDayID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AssignParticipantsAtWorkshops" />
+          <FunctionImport Name="AssignParticipantToWorkshop">
+            <Parameter Name="EntryID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkshopSubOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AssociateStudentCard">
+            <Parameter Name="ParticipantID" Mode="In" Type="Int32" />
+            <Parameter Name="StudentCardNumber" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="BatchCreateCompanyCust" />
+          <FunctionImport Name="BatchCreateIndivudualCust" />
+          <FunctionImport Name="BatchInsertPayments" />
+          <FunctionImport Name="ChangeCompanyClient">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="Login" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="Fax" Mode="In" Type="String" />
+            <Parameter Name="NIP" Mode="In" Type="String" />
+            <Parameter Name="ContactPersonName" Mode="In" Type="String" />
+            <Parameter Name="ContactPersonSurname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeIndivClientData">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="Login" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="PESEL" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeNumbOfSeatsAtOrdOnConfDay">
+            <Parameter Name="OrdOnConfDay" Mode="In" Type="Int32" />
+            <Parameter Name="NumberOfRegSeats" Mode="In" Type="Int16" />
+            <Parameter Name="NumberOfStudentsSeats" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeNumbOfSeatsAtWorkshopSubOrd">
+            <Parameter Name="WorkshopSubOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="NumberOfSeats" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeParticipantData">
+            <Parameter Name="ParticipantID" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PESEL" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeStatusOfOrder">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="CreateCompanyClient">
+            <Parameter Name="Login" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="Fax" Mode="In" Type="String" />
+            <Parameter Name="NIP" Mode="In" Type="String" />
+            <Parameter Name="ContactPersonName" Mode="In" Type="String" />
+            <Parameter Name="ContactPersonSurname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateConference">
+            <Parameter Name="ConfName" Mode="In" Type="String" />
+            <Parameter Name="ConfTopic" Mode="In" Type="String" />
+            <Parameter Name="ConfDescription" Mode="In" Type="String" />
+            <Parameter Name="StudentDiscount" Mode="In" Type="Single" />
+          </FunctionImport>
+          <FunctionImport Name="CreateDayOfConf">
+            <Parameter Name="ConfID" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="SpaceLimit" Mode="In" Type="Int16" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="CreateIndivudualCust">
+            <Parameter Name="Login" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="PESEL" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="StudentCardNumber" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="CreateOrder">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="DateOfBook" Mode="In" Type="DateTime" />
+            <Parameter Name="DayOfConfID" Mode="In" Type="Int32" />
+            <Parameter Name="NumberOfRegularSeats" Mode="In" Type="Int16" />
+            <Parameter Name="NumberOfStudentSeats" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="CreateOrderBatch">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="DateOfBook" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="CreatePriceThreshold">
+            <Parameter Name="ConfDayID" Mode="In" Type="Int32" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="CreateWorkshop">
+            <Parameter Name="DayOfConfID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+            <Parameter Name="StartTime" Mode="In" Type="Time" />
+            <Parameter Name="EndTime" Mode="In" Type="Time" />
+            <Parameter Name="SpaceLimit" Mode="In" Type="Int16" />
+            <Parameter Name="TeacherName" Mode="In" Type="String" />
+            <Parameter Name="TeacherSurname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteConfDay">
+            <Parameter Name="DayOfConfID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOrder">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOrdOnConfDayFromOrder">
+            <Parameter Name="OrdOnConfDayID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteParticipantByClient">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="ParticipantID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteParticipantFromConfDay">
+            <Parameter Name="EntryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteParticipantFromWorkshop">
+            <Parameter Name="EntryID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkshopSubOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStudentCard">
+            <Parameter Name="StudentCardID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteWorkshop">
+            <Parameter Name="WorkshopID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteWorkshopSubOrder">
+            <Parameter Name="WorkshopSubOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditConference">
+            <Parameter Name="ConfID" Mode="In" Type="Int32" />
+            <Parameter Name="ConfName" Mode="In" Type="String" />
+            <Parameter Name="ConfTopic" Mode="In" Type="String" />
+            <Parameter Name="ConfDescription" Mode="In" Type="String" />
+            <Parameter Name="StudentDiscount" Mode="In" Type="Single" />
+          </FunctionImport>
+          <FunctionImport Name="EditDayOfConf">
+            <Parameter Name="DayOfConfID" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="SpaceLimit" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="EditPriceThreshold">
+            <Parameter Name="PriceThresholdID" Mode="In" Type="Int32" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="EditWorkshop">
+            <Parameter Name="WorkshopID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+            <Parameter Name="StartTime" Mode="In" Type="Time" />
+            <Parameter Name="EndTime" Mode="In" Type="Time" />
+            <Parameter Name="SpaceLimit" Mode="In" Type="Int16" />
+            <Parameter Name="TeacherName" Mode="In" Type="String" />
+            <Parameter Name="TeacherSurname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertParticipant">
+            <Parameter Name="ClientID" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PESEL" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPayment">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="Value" Mode="In" Type="Decimal" />
+            <Parameter Name="AccountNumber" Mode="In" Type="String" />
+            <Parameter Name="TitleOfPayment" Mode="In" Type="String" />
+            <Parameter Name="TransferSender" Mode="In" Type="String" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertWorkshopSubOrder">
+            <Parameter Name="OrderOnConfDayID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkshopID" Mode="In" Type="Int32" />
+            <Parameter Name="NumberOfSeats" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="InsertWorkshopSubOrderBatch">
+            <Parameter Name="OrderOnConfDayID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ppeczek_aModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ppeczek_aModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="UpdateOrderStatus" />
+          <FunctionImport Name="UpdateSysInfo" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ppeczek_aModelStoreContainer" CdmEntityContainer="ConferencesModelContext">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="IsTypeOf(ppeczek_aModel.Clients)">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ppeczek_aModel.CompDetails)">
+              <MappingFragment StoreEntitySet="CompDetails">
+                <ScalarProperty Name="ContactPersonSurname" ColumnName="ContactPersonSurname" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="ppeczek_aModel.Conferences">
+              <MappingFragment StoreEntitySet="Conferences">
+                <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+                <ScalarProperty Name="ConfName" ColumnName="ConfName" />
+                <ScalarProperty Name="ConfTopic" ColumnName="ConfTopic" />
+                <ScalarProperty Name="ConfDescription" ColumnName="ConfDescription" />
+                <ScalarProperty Name="StudentDiscount" ColumnName="StudentDiscount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaysOfConf">
+            <EntityTypeMapping TypeName="ppeczek_aModel.DaysOfConf">
+              <MappingFragment StoreEntitySet="DaysOfConf">
+                <ScalarProperty Name="DayOfConfID" ColumnName="DayOfConfID" />
+                <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SpaceLimit" ColumnName="SpaceLimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ppeczek_aModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="DateOfBook" ColumnName="DateOfBook" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdersOnConfDays">
+            <EntityTypeMapping TypeName="ppeczek_aModel.OrdersOnConfDays">
+              <MappingFragment StoreEntitySet="OrdersOnConfDays">
+                <ScalarProperty Name="OrdOnConfDayID" ColumnName="OrdOnConfDayID" />
+                <ScalarProperty Name="DayOfConfID" ColumnName="DayOfConfID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="NumberOfRegularSeats" ColumnName="NumberOfRegularSeats" />
+                <ScalarProperty Name="NumberOfStudentSeats" ColumnName="NumberOfStudentSeats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="IsTypeOf(ppeczek_aModel.Participants)">
+              <MappingFragment StoreEntitySet="Participants">
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(ppeczek_aModel.ParticipantsDetails)">
+              <MappingFragment StoreEntitySet="ParticipantsDetails">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParticipAtConfDay">
+            <EntityTypeMapping TypeName="ppeczek_aModel.ParticipAtConfDay">
+              <MappingFragment StoreEntitySet="ParticipAtConfDay">
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="OrdOnConfDayID" ColumnName="OrdOnConfDayID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ppeczek_aModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="TitleOfPayment" ColumnName="TitleOfPayment" />
+                <ScalarProperty Name="TransferSender" ColumnName="TransferSender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceThresholds">
+            <EntityTypeMapping TypeName="ppeczek_aModel.PriceThresholds">
+              <MappingFragment StoreEntitySet="PriceThresholds">
+                <ScalarProperty Name="ThresholdID" ColumnName="ThresholdID" />
+                <ScalarProperty Name="DayOfConfID" ColumnName="DayOfConfID" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCards">
+            <EntityTypeMapping TypeName="ppeczek_aModel.StudentCards">
+              <MappingFragment StoreEntitySet="StudentCards">
+                <ScalarProperty Name="StudentCardID" ColumnName="StudentCardID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="StudentCardNumber" ColumnName="StudentCardNumber" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ppeczek_aModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysInfo">
+            <EntityTypeMapping TypeName="ppeczek_aModel.SysInfo">
+              <MappingFragment StoreEntitySet="SysInfo">
+                <ScalarProperty Name="SettingID" ColumnName="SettingID" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workshops">
+            <EntityTypeMapping TypeName="ppeczek_aModel.Workshops">
+              <MappingFragment StoreEntitySet="Workshops">
+                <ScalarProperty Name="WorkshopID" ColumnName="WorkshopID" />
+                <ScalarProperty Name="DayOfConfID" ColumnName="DayOfConfID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="TeacherSurname" ColumnName="TeacherSurname" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="SpaceLimit" ColumnName="SpaceLimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkshopsSubOrders">
+            <EntityTypeMapping TypeName="ppeczek_aModel.WorkshopsSubOrders">
+              <MappingFragment StoreEntitySet="WorkshopsSubOrders">
+                <ScalarProperty Name="WorkshopSubOrderID" ColumnName="WorkshopSubOrderID" />
+                <ScalarProperty Name="WorkshopID" ColumnName="WorkshopID" />
+                <ScalarProperty Name="OrdOnConfDayID" ColumnName="OrdOnConfDayID" />
+                <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="IndividualsDetails" TypeName="ppeczek_aModel.IndividualsDetails" StoreEntitySet="IndividualsDetails">
+            <EndProperty Name="Clients">
+              <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+            </EndProperty>
+            <EndProperty Name="Participants">
+              <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ParticipantsAtWorkshops" TypeName="ppeczek_aModel.ParticipantsAtWorkshops" StoreEntitySet="ParticipantsAtWorkshops">
+            <EndProperty Name="ParticipAtConfDay">
+              <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+            </EndProperty>
+            <EndProperty Name="WorkshopsSubOrders">
+              <ScalarProperty Name="WorkshopSubOrderID" ColumnName="WorkshopSubOrderID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ParticipRegByClients" TypeName="ppeczek_aModel.ParticipRegByClients" StoreEntitySet="ParticipRegByClients">
+            <EndProperty Name="Clients">
+              <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+            </EndProperty>
+            <EndProperty Name="Participants">
+              <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionName="ppeczek_aModel.Store.GetValueOfAllOrders" FunctionImportName="GetValueOfAllOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.GetValueOfAllOrders_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ppeczek_aModel.Store.ShowOrdersStatus" FunctionImportName="ShowOrdersStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.ShowOrdersStatus_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfBook" ColumnName="DateOfBook" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ppeczek_aModel.Store.StatsOnConference" FunctionImportName="StatsOnConference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.StatsOnConference_Result">
+                <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+                <ScalarProperty Name="ConfName" ColumnName="ConfName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PercOccupConf" ColumnName="PercOccupConf" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ppeczek_aModel.Store.StatsOnConferences" FunctionImportName="StatsOnConferences">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.StatsOnConferences_Result">
+                <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+                <ScalarProperty Name="ConfName" ColumnName="ConfName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PercOccupConf" ColumnName="PercOccupConf" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ppeczek_aModel.Store.StatsOnWorkshopsAtConference" FunctionImportName="StatsOnWorkshopsAtConference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.StatsOnWorkshopsAtConference_Result">
+                <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+                <ScalarProperty Name="ConfName" ColumnName="ConfName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="WorkshopName" ColumnName="WorkshopName" />
+                <ScalarProperty Name="PercOccupWorkshop" ColumnName="PercOccupWorkshop" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AssignParticipantAtConfDay" FunctionName="ppeczek_aModel.Store.AssignParticipantAtConfDay" />
+          <FunctionImportMapping FunctionImportName="AssignParticipantsAtConfDay" FunctionName="ppeczek_aModel.Store.AssignParticipantsAtConfDay" />
+          <FunctionImportMapping FunctionImportName="AssignParticipantsAtWorkshops" FunctionName="ppeczek_aModel.Store.AssignParticipantsAtWorkshops" />
+          <FunctionImportMapping FunctionImportName="AssignParticipantToWorkshop" FunctionName="ppeczek_aModel.Store.AssignParticipantToWorkshop" />
+          <FunctionImportMapping FunctionImportName="AssociateStudentCard" FunctionName="ppeczek_aModel.Store.AssociateStudentCard" />
+          <FunctionImportMapping FunctionImportName="BatchCreateCompanyCust" FunctionName="ppeczek_aModel.Store.BatchCreateCompanyCust" />
+          <FunctionImportMapping FunctionImportName="BatchCreateIndivudualCust" FunctionName="ppeczek_aModel.Store.BatchCreateIndivudualCust" />
+          <FunctionImportMapping FunctionImportName="BatchInsertPayments" FunctionName="ppeczek_aModel.Store.BatchInsertPayments" />
+          <FunctionImportMapping FunctionImportName="ChangeCompanyClient" FunctionName="ppeczek_aModel.Store.ChangeCompanyClient" />
+          <FunctionImportMapping FunctionImportName="ChangeIndivClientData" FunctionName="ppeczek_aModel.Store.ChangeIndivClientData" />
+          <FunctionImportMapping FunctionImportName="ChangeNumbOfSeatsAtOrdOnConfDay" FunctionName="ppeczek_aModel.Store.ChangeNumbOfSeatsAtOrdOnConfDay" />
+          <FunctionImportMapping FunctionImportName="ChangeNumbOfSeatsAtWorkshopSubOrd" FunctionName="ppeczek_aModel.Store.ChangeNumbOfSeatsAtWorkshopSubOrd" />
+          <FunctionImportMapping FunctionImportName="ChangeParticipantData" FunctionName="ppeczek_aModel.Store.ChangeParticipantData" />
+          <FunctionImportMapping FunctionImportName="ChangeStatusOfOrder" FunctionName="ppeczek_aModel.Store.ChangeStatusOfOrder" />
+          <FunctionImportMapping FunctionImportName="CreateCompanyClient" FunctionName="ppeczek_aModel.Store.CreateCompanyClient" />
+          <FunctionImportMapping FunctionImportName="CreateConference" FunctionName="ppeczek_aModel.Store.CreateConference" />
+          <FunctionImportMapping FunctionImportName="CreateDayOfConf" FunctionName="ppeczek_aModel.Store.CreateDayOfConf" />
+          <FunctionImportMapping FunctionImportName="CreateIndivudualCust" FunctionName="ppeczek_aModel.Store.CreateIndivudualCust" />
+          <FunctionImportMapping FunctionImportName="CreateOrder" FunctionName="ppeczek_aModel.Store.CreateOrder" />
+          <FunctionImportMapping FunctionImportName="CreateOrderBatch" FunctionName="ppeczek_aModel.Store.CreateOrderBatch" />
+          <FunctionImportMapping FunctionImportName="CreatePriceThreshold" FunctionName="ppeczek_aModel.Store.CreatePriceThreshold" />
+          <FunctionImportMapping FunctionImportName="CreateWorkshop" FunctionName="ppeczek_aModel.Store.CreateWorkshop" />
+          <FunctionImportMapping FunctionImportName="DeleteConfDay" FunctionName="ppeczek_aModel.Store.DeleteConfDay" />
+          <FunctionImportMapping FunctionImportName="DeleteOrder" FunctionName="ppeczek_aModel.Store.DeleteOrder" />
+          <FunctionImportMapping FunctionImportName="DeleteOrdOnConfDayFromOrder" FunctionName="ppeczek_aModel.Store.DeleteOrdOnConfDayFromOrder" />
+          <FunctionImportMapping FunctionImportName="DeleteParticipantByClient" FunctionName="ppeczek_aModel.Store.DeleteParticipantByClient" />
+          <FunctionImportMapping FunctionImportName="DeleteParticipantFromConfDay" FunctionName="ppeczek_aModel.Store.DeleteParticipantFromConfDay" />
+          <FunctionImportMapping FunctionImportName="DeleteParticipantFromWorkshop" FunctionName="ppeczek_aModel.Store.DeleteParticipantFromWorkshop" />
+          <FunctionImportMapping FunctionImportName="DeleteStudentCard" FunctionName="ppeczek_aModel.Store.DeleteStudentCard" />
+          <FunctionImportMapping FunctionImportName="DeleteWorkshop" FunctionName="ppeczek_aModel.Store.DeleteWorkshop" />
+          <FunctionImportMapping FunctionImportName="DeleteWorkshopSubOrder" FunctionName="ppeczek_aModel.Store.DeleteWorkshopSubOrder" />
+          <FunctionImportMapping FunctionImportName="EditConference" FunctionName="ppeczek_aModel.Store.EditConference" />
+          <FunctionImportMapping FunctionImportName="EditDayOfConf" FunctionName="ppeczek_aModel.Store.EditDayOfConf" />
+          <FunctionImportMapping FunctionImportName="EditPriceThreshold" FunctionName="ppeczek_aModel.Store.EditPriceThreshold" />
+          <FunctionImportMapping FunctionImportName="EditWorkshop" FunctionName="ppeczek_aModel.Store.EditWorkshop" />
+          <FunctionImportMapping FunctionImportName="InsertParticipant" FunctionName="ppeczek_aModel.Store.InsertParticipant" />
+          <FunctionImportMapping FunctionImportName="InsertPayment" FunctionName="ppeczek_aModel.Store.InsertPayment" />
+          <FunctionImportMapping FunctionImportName="InsertWorkshopSubOrder" FunctionName="ppeczek_aModel.Store.InsertWorkshopSubOrder" />
+          <FunctionImportMapping FunctionImportName="InsertWorkshopSubOrderBatch" FunctionName="ppeczek_aModel.Store.InsertWorkshopSubOrderBatch" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ppeczek_aModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ppeczek_aModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ppeczek_aModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ppeczek_aModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ppeczek_aModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ppeczek_aModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ppeczek_aModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ppeczek_aModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="UpdateOrderStatus" FunctionName="ppeczek_aModel.Store.UpdateOrderStatus" />
+          <FunctionImportMapping FunctionImportName="UpdateSysInfo" FunctionName="ppeczek_aModel.Store.UpdateSysInfo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7a4343e427b34405af2a29e9aaf3c21a" Name="Diagram1">
+        <EntityTypeShape EntityType="ppeczek_aModel.Clients" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.CompDetails" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.Conferences" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.DaysOfConf" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.Orders" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.OrdersOnConfDays" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.Participants" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.ParticipantsDetails" Width="1.5" PointX="5.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.ParticipAtConfDay" Width="1.5" PointX="7.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.Payments" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.PriceThresholds" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.StudentCards" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.SysInfo" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.Workshops" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ppeczek_aModel.WorkshopsSubOrders" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="ppeczek_aModel.FK_Orders_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_DaysOfConf_Conferences" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_OrdersOnConfDays_DaysOfConf" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_PriceThresholds_DaysOfConf" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_Workshops_DaysOfConf" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_OrdersOnConfDays_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_Payments_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_ParticipAtConfDay_OrdersOnConfDays" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_WorkshopsSubOrders_OrdersOnConfDays" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_ParticipAtConfDay_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_StudentCards_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.FK_WorkshopsSubOrders_Workshops" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.IndividualsDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.ParticipantsAtWorkshops" ManuallyRouted="false" />
+        <AssociationConnector Association="ppeczek_aModel.ParticipRegByClients" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="ppeczek_aModel.CompDetails" />
+        <InheritanceConnector EntityType="ppeczek_aModel.ParticipantsDetails" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
