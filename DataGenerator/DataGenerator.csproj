@@ -62,6 +62,7 @@
     <Compile Include="Generator\Emails\EmailGenerator.cs" />
     <Compile Include="Generator\GeneratorCore.cs" />
     <Compile Include="Generator\IndividCustomers\IndividualCustomersGenerator.cs" />
+    <Compile Include="Generator\Numbers\AccountNumberGenerator.cs" />
     <Compile Include="Generator\Numbers\FaxGenerator.cs" />
     <Compile Include="Generator\Numbers\INumberGenerator.cs" />
     <Compile Include="Generator\Numbers\NIPGenerator.cs" />
@@ -70,10 +71,10 @@
     <Compile Include="Generator\Numbers\PESELOrPassportGenerator.cs" />
     <Compile Include="Generator\Numbers\PhoneGenerator.cs" />
     <Compile Include="Generator\Numbers\StudentCradNumberGenerator.cs" />
-    <Compile Include="Generator\Orders\OrdersGeneratorCore.cs" />
+    <Compile Include="Generator\Orders\OrdersGenerator.cs" />
     <Compile Include="Generator\Participants\ParticipantsStudCardsGenerator.cs" />
     <Compile Include="Generator\People\PeopleGenerator.cs" />
-    <Compile Include="Generator\People\PersonNameSurname.cs" />
+    <Compile Include="Generator\People\Person.cs" />
     <Compile Include="ORM\Clients.cs">
       <DependentUpon>ConferencesModel.tt</DependentUpon>
     </Compile>

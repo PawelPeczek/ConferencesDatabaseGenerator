@@ -32,12 +32,13 @@ namespace DataGenerator.Generator.IndividCustomers {
                 ctx.StudentCards.Add(sc);
             }
         }
-        public void GenerateIndividualCustomers(int ammount) {
-            PersonNameSurname[] people = new PeopleGenerator().GenerateNamesSurnames(ammount);
+        public void GenerateIndividualClients(int ammount) {
+            Person[] people = new PeopleGenerator().GenerateNamesSurnames(ammount);
             ParticipantsStudCardsGenerator pScGen = new ParticipantsStudCardsGenerator();
             using (ConferencesModelContext ctx = new ConferencesModelContext()) {
                 ctx.Configuration.AutoDetectChangesEnabled = false;
                 for (int i = 0; i < ammount; i++) {
+                    Console.Write(".");
                     Clients c = new Clients {
                         Login = "IndivClient" + i,
                         Email = GeneratorCore.GetFollowingEmail(),
@@ -59,7 +60,7 @@ namespace DataGenerator.Generator.IndividCustomers {
                         pScGen.AttachParticipantWithStudCards(p, ctx);
                     }
                 }
-                Console.WriteLine("Computing finished!");
+                Console.Write("[DB]");
                 ctx.SaveChanges();
             }
         }

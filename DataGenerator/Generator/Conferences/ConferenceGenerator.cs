@@ -25,11 +25,28 @@ namespace DataGenerator.Generator.Conferences {
             "Healthcare", "Sport", "Animals", "Games", "Sport", "Entertainment", "Discussions", null
         };
         private float[] Disounts = { 0.1F, 0.15F, 0.2F, 0.22F, 0.25F, 0.35F, 0.5F };
-        // private short[] WorkshopSpaceLimits = { 15, 20, 25, 30, 32, 35, 40, 50 };
-        private short[] WorkshopSpaceLimits = { 8, 10, 15 };
-        //private short[] ConfDaySpaceLimits = { 180, 190, 200, 210, 220};
-        private short[] ConfDaySpaceLimits = { 30, 35, 40 };
+        private short[] WorkshopSpaceLimits = { 15, 20, 25, 30, 32, 35, 40, 50 };
+        //private short[] WorkshopSpaceLimits = { 8, 10 };
+        private short[] ConfDaySpaceLimits = { 180, 190, 200, 210, 220};
+        //private short[] ConfDaySpaceLimits = { 30, 35, 40 };
         private string[] WorkNames = { "Practise", "Research", "Advanced", "Semi-pro", "Beginners" };
+
+        public void GenerateWholeBatchOfConf() {
+            Conferences.ConferenceGenerator cg = new Conferences.ConferenceGenerator();
+            DateTime simulationDate = new DateTime(2015, 1, 1);
+            DateTime sentinelDate = new DateTime(2018, 3, 1);
+            using (ConferencesModelContext ctx = new ConferencesModelContext()) {
+                ctx.Configuration.AutoDetectChangesEnabled = false;
+                while (simulationDate < sentinelDate) {
+                    Console.Write(".");
+                    cg.CreateConferenceComplex(rnd.Next(3, 5), simulationDate, ctx);
+                    simulationDate = simulationDate.AddDays(rnd.Next(10, 16));
+                }
+                Console.Write("[DB]");
+                ctx.SaveChanges();
+            }
+        }
+
         private ORM.Conferences GenerateConference() {
             ORM.Conferences res = new ORM.Conferences {
                 ConfName = Titles[rnd.Next(0, Titles.Length)] + " conference \"" + Names[rnd.Next(0, Names.Length)] + "\"",
@@ -59,7 +76,7 @@ namespace DataGenerator.Generator.Conferences {
             TimeSpan baseTimeEnd = new TimeSpan(10, 30, 0);
             TimeSpan interval = new TimeSpan(1, 0, 0);
             for (int i = 0; i < NumOfWOrkshops; i++) {
-                PersonNameSurname techer = new PeopleGenerator().GenerateSingleNameSurname();
+                Person techer = new PeopleGenerator().GenerateSingleNameSurname();
                 decimal val = rnd.Next(0, 200) + (decimal) rnd.NextDouble();
                 if (val < 25) val = 0;
                 Workshops w = new Workshops {
@@ -67,7 +84,7 @@ namespace DataGenerator.Generator.Conferences {
                     StartTime = baseTimeStart,
                     EndTime = baseTimeEnd,
                     SpaceLimit = WorkshopSpaceLimits[rnd.Next(0, WorkshopSpaceLimits.Length)],
-                    Name = (doc.Conferences.ConfTopic != null ? doc.Conferences.ConfTopic : "Workshop with/of") + 
+                    Name = (doc.Conferences.ConfTopic ?? "Workshop with/of") + 
                             " " + WorkNames[rnd.Next(0, WorkNames.Length)],
                     TeacherName = techer.Name,
                     TeacherSurname = techer.Surname,
@@ -92,7 +109,7 @@ namespace DataGenerator.Generator.Conferences {
             }
         }
 
-        public void CreateConferenceComplex(int numbOfConfDays, DateTime confStart, ConferencesModelContext ctx) {
+        private void CreateConferenceComplex(int numbOfConfDays, DateTime confStart, ConferencesModelContext ctx) {
             ORM.Conferences conf = GenerateConference();
             ctx.Conferences.Add(conf);
             GenerateDaysOfConf(numbOfConfDays, confStart, conf, ctx);

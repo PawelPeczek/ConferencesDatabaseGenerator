@@ -14,7 +14,7 @@ namespace DataGenerator.Generator.Numbers {
 
         private string PESELStrategy() {
             string tmp;
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
+            
             if (rnd.Next(0, 20) == 17) tmp = GetSingleRandPassport();
             else tmp = GetSingleRandPESEL();
             return tmp;

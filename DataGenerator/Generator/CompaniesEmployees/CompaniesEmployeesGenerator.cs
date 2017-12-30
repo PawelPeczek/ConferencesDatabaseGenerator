@@ -20,15 +20,13 @@ namespace DataGenerator.Generator.CompaniesEmployees {
                                     select c;
                     int saveCounter = 0;
                     foreach (CompDetails c in Companies.ToArray()) {
-                        Console.WriteLine($"Generating emps for company: {c.ClientID}");
+                        Console.Write(".");
                         CreateBatchOfEmplForComp(c, EmpPerComp, StdPerCmp, ctx);
                         saveCounter++;
                         if (saveCounter % 50 == 0) {
                             saveCounter = 0;
-                            Console.WriteLine("Context saving...");
-                            ctx.Database.Log = Console.Write;
+                            Console.Write("[DB]");
                             ctx.SaveChanges();
-                            Console.WriteLine("Done...");
                         }
                     }
                     ctx.SaveChanges();
@@ -37,7 +35,7 @@ namespace DataGenerator.Generator.CompaniesEmployees {
         private void CreateBatchOfEmplForComp(CompDetails c, int EmpPerComp, int StdPerCmp, ConferencesModelContext ctx) {
             ParticipantsStudCardsGenerator pScGen = new ParticipantsStudCardsGenerator();
             for (int i = 1; i <= EmpPerComp; i++) {
-                PersonNameSurname person = new PeopleGenerator().GenerateSingleNameSurname();
+                Person person = new PeopleGenerator().GenerateSingleNameSurname();
                 ParticipantsDetails p = new ParticipantsDetails {
                     Email = GeneratorCore.GetFollowingEmail(),
                     Name = person.Name,

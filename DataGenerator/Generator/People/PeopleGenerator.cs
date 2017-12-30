@@ -20,12 +20,12 @@ namespace DataGenerator.Generator.People {
             "Rickmann", "Bright", "Stalone", "Lemmar", "Monday", "Harris", "Cash", "Masters"
         };
 
-        public PersonNameSurname[] GenerateNamesSurnames(int ammount) {
-            PersonNameSurname[] res = new PersonNameSurname[ammount];
-            PersonNameSurname[] tmp;
+        public Person[] GenerateNamesSurnames(int ammount) {
+            Person[] res = new Person[ammount];
+            Person[] tmp;
             var cartesianQuery = from x in Names
                                  from y in Surnames
-                                 select new PersonNameSurname(x, y);
+                                 select new Person(x, y);
             tmp = cartesianQuery.OrderBy(x => rand.Next()).ToArray();
             int generatorCapacity = Names.Length * Surnames.Length;
             if (ammount <= generatorCapacity) {
@@ -38,8 +38,8 @@ namespace DataGenerator.Generator.People {
             return res;
         }
 
-        public PersonNameSurname GenerateSingleNameSurname() {
-            return new PersonNameSurname(Names[rand.Next(0, Names.Length)], Surnames[rand.Next(0, Surnames.Length)]);
+        public Person GenerateSingleNameSurname() {
+            return new Person(Names[rand.Next(0, Names.Length)], Surnames[rand.Next(0, Surnames.Length)]);
         }
     }
 }

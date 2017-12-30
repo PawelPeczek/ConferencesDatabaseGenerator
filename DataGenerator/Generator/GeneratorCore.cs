@@ -1,9 +1,11 @@
 ﻿using DataGenerator.Generator.Companies;
 using DataGenerator.Generator.CompaniesEmployees;
+using DataGenerator.Generator.Conferences;
 using DataGenerator.Generator.Dates;
 using DataGenerator.Generator.Emails;
 using DataGenerator.Generator.IndividCustomers;
 using DataGenerator.Generator.Numbers;
+using DataGenerator.Generator.Orders;
 using DataGenerator.Generator.People;
 using DataGenerator.ORM;
 using System;
@@ -16,17 +18,17 @@ using static DataGenerator.Generator.Numbers.NumberGenerator;
 
 namespace DataGenerator.Generator {
     class GeneratorCore {
-        public const int NUMBER_OF_PARTICIP = 3300;
+        public const int NUMBER_OF_PARTICIP = 11000;
         public const int NUMBER_OF_COMPANIES = 300;
-        public const int NUMBER_OF_INDIV_CLIENTS = 300;
-        public const int NUMBER_OF_STUD_PER_COPM = 3;
+        public const int NUMBER_OF_INDIV_CLIENTS = 1000;
+        public const int NUMBER_OF_STUD_PER_COPM = 10;
         private static string[] Emails;
         private static string[] PESELs;
         private static string[] Phones;
         private static int EmailsPointer = 0;
         private static int PESELsPointer = 0;
         private static int PhonesPointer = 0;
-
+        private Random rnd = new Random(Guid.NewGuid().GetHashCode());
         static GeneratorCore() {
             Emails = new EmailGenerator().GenerateEmails(NUMBER_OF_PARTICIP + NUMBER_OF_COMPANIES);
             PESELs = new PESELOrPassportGenerator().Generate(NUMBER_OF_PARTICIP);
@@ -53,53 +55,34 @@ namespace DataGenerator.Generator {
                 return Phones[PhonesPointer - 1];
             } else throw new IndexOutOfRangeException();
         }
-
-        private Random rnd = new Random(Guid.NewGuid().GetHashCode());
         public void GenerateData() {
-            CompaniesGenerator compGen = new CompaniesGenerator();
-            IndividualCustomersGenerator icGen = new IndividualCustomersGenerator();
-            CompaniesEmployeesGenerator compEmpGen = new CompaniesEmployeesGenerator();
-            
+            CompaniesGenerator CompGen = new CompaniesGenerator();
+            IndividualCustomersGenerator IcGen = new IndividualCustomersGenerator();
+            CompaniesEmployeesGenerator CompEmpGen = new CompaniesEmployeesGenerator();
+            ConferenceGenerator ConfGen = new ConferenceGenerator();
+            OrdersGenerator OrdGen = new OrdersGenerator();
                 try {
-                    GenerateWholeBatchOfConf();
-                    //compGen.GenerateCompaniesClients(NUMBER_OF_COMPANIES);
-                    //Console.WriteLine("DONE!");
-                    //icGen.GenerateIndividualCustomers(NUMBER_OF_INDIV_CLIENTS);
-                    //Console.WriteLine("Computation individual clients done!");
-                    //Console.WriteLine("DONE!");
-                    //int PartPerComp = (NUMBER_OF_PARTICIP - NUMBER_OF_INDIV_CLIENTS) / NUMBER_OF_COMPANIES;
-                    //compEmpGen.GenerateEmployeesForCompanies(PartPerComp, NUMBER_OF_STUD_PER_COPM);
-                    //Console.WriteLine("Computations done!");
-                    //Console.WriteLine("DONE!");
-                } catch (DbEntityValidationException e) {
-                    foreach (var eve in e.EntityValidationErrors) {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors) {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
+                    Console.WriteLine("\n[STEP 1/5] Generating conferences...");
+                    ConfGen.GenerateWholeBatchOfConf();
+                    Console.WriteLine("\n[STEP 2/5] Generating Companies Clients...");
+                    CompGen.GenerateCompaniesClients(NUMBER_OF_COMPANIES);
+                    Console.WriteLine("\n[STEP 3/5] Generating Individuals Clients...");
+                    IcGen.GenerateIndividualClients(NUMBER_OF_INDIV_CLIENTS);
+                    int PartPerComp = (NUMBER_OF_PARTICIP - NUMBER_OF_INDIV_CLIENTS) / NUMBER_OF_COMPANIES;
+                    Console.WriteLine("\n[STEP 4/5] Generating Employees for Companies...");
+                    CompEmpGen.GenerateEmployeesForCompanies(PartPerComp, NUMBER_OF_STUD_PER_COPM);
+                    Console.WriteLine("\n[STEP 5/5] Generating Orders...");
+                    OrdGen.GenerateBatchOfOrders();
                 } catch (Exception ex) {
+                    Console.WriteLine("\n\n[DEBUG MODE]");
                     Console.WriteLine(ex.StackTrace);
+                    Console.WriteLine("\n[ERROR MESSAGE]");
                     Console.WriteLine(ex.Message);
-                   //Console.WriteLine(ex.InnerException.InnerException.Message);
+                    if(ex.InnerException != null && ex.InnerException.InnerException != null) {
+                        Console.WriteLine("\n[SUPRESSED EXCEPTION MESSAGE]");
+                        Console.WriteLine(ex.InnerException.InnerException.Message);
+                    }   
                 }
-        }
-
-        private void GenerateWholeBatchOfConf() {
-            Conferences.ConferenceGenerator cg = new Conferences.ConferenceGenerator();
-            DateTime simulationDate = new DateTime(2015, 1, 1);
-            DateTime sentinelDate = new DateTime(2018, 3, 1);
-            using(ConferencesModelContext ctx = new ConferencesModelContext()) {
-                ctx.Configuration.AutoDetectChangesEnabled = false;
-                while (simulationDate < sentinelDate) {
-                    cg.CreateConferenceComplex(rnd.Next(3, 5), simulationDate, ctx);
-                    simulationDate = simulationDate.AddDays(rnd.Next(10, 16));
-                }
-                Console.WriteLine("Computing done! Waiting for DB");
-                ctx.SaveChanges();
-            }
         }
     }
 }

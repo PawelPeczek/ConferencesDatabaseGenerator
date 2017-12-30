@@ -34,5 +34,22 @@ namespace DataGenerator.ORM
         public virtual ICollection<PriceThresholds> PriceThresholds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Workshops> Workshops { get; set; }
+        public decimal PriceThresholdForDate(DateTime date) {
+            decimal res = 0;
+            DateTime Min = DateTime.MaxValue;
+            foreach(PriceThresholds pt in PriceThresholds) {
+                if (pt.EndDate >= date && pt.EndDate < Min) {
+                    Min = pt.EndDate;
+                    res = pt.Value;
+                } 
+            }
+            if (Min == DateTime.MaxValue)
+                throw new IndexOutOfRangeException($"Cannot find PriceThreshold for given date " +
+                    $"({date}, DayOfConf date: {Date})!");
+            return res;
+        }
+        public float GetStudentDiscount() {
+            return Conferences.StudentDiscount;
+        }
     }
 }

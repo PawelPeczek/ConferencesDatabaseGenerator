@@ -12,7 +12,6 @@ namespace DataGenerator.Generator.Numbers {
         }
         private string GetSingleRandNIP() {
             StringBuilder res = new StringBuilder();
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             for (int i = 0; i < 13; i++) {
                 if (i != 3 && i != 7 && i != 10) res.Append(Digits[rnd.Next(0, Digits.Length)]);
                 else res.Append("-");

@@ -1,13 +1,9 @@
-﻿using DataGenerator.Generator.Emails;
-using DataGenerator.Generator.Numbers;
+﻿using DataGenerator.Generator.Numbers;
 using DataGenerator.Generator.People;
 using DataGenerator.ORM;
 using System.Security.Cryptography;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.Companies {
     class CompaniesGenerator {
@@ -19,9 +15,10 @@ namespace DataGenerator.Generator.Companies {
             string[] CompNames = cng.GenerateCompNames(NumOfComp);
             string[] NIPs = ng.Generate(NumOfComp);
             string[] Faxes = fg.Generate(NumOfComp);
-            PersonNameSurname[] Contacts = peopleg.GenerateNamesSurnames(NumOfComp);
+            Person[] Contacts = peopleg.GenerateNamesSurnames(NumOfComp);
             using (ConferencesModelContext ctx = new ConferencesModelContext()) {
                 for (int i = 0; i < CompNames.Length; i++) {
+                    Console.Write(".");
                     CompDetails cd = new CompDetails {
                         Login = "compClient" + i,
                         Email = GeneratorCore.GetFollowingEmail(),
@@ -35,6 +32,7 @@ namespace DataGenerator.Generator.Companies {
                     };
                     ctx.Clients.Add(cd);
                 }
+                Console.Write("[DB]");
                 ctx.SaveChanges();
             }
         }

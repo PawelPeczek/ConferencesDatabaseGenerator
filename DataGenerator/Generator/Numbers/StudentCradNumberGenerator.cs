@@ -11,7 +11,6 @@ namespace DataGenerator.Generator.Numbers {
         }
 
         private string GetSingleRandStudCardNumb() {
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             StringBuilder res = new StringBuilder();
             for(int i = 0; i < 2; i++) {
                 res.Append(Letters[rnd.Next(0, Letters.Length)]);

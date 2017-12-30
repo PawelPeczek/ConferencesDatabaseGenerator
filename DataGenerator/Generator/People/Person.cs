@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.People {
-    class PersonNameSurname {
+    class Person {
         public string Name { get; private set; }
         public string Surname { get; private set; }
-        public PersonNameSurname(string name, string surname) {
+        public Person(string name, string surname) {
             Name = name;
             Surname = surname;
         }

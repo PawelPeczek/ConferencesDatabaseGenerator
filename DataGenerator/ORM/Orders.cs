@@ -31,5 +31,20 @@ namespace DataGenerator.ORM
         public virtual ICollection<OrdersOnConfDays> OrdersOnConfDays { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payments> Payments { get; set; }
+
+        public decimal CountValue() {
+            decimal res = 0;
+            foreach(OrdersOnConfDays oocd in OrdersOnConfDays) {
+                decimal UnitPrice = oocd.DaysOfConf.PriceThresholdForDate(DateOfBook);
+                Console.WriteLine($"Counting for S: {oocd.NumberOfStudentSeats} and R: {oocd.NumberOfRegularSeats}");
+                res += oocd.NumberOfRegularSeats * UnitPrice +
+                    oocd.NumberOfStudentSeats * (1 - (decimal)oocd.DaysOfConf.GetStudentDiscount()) * UnitPrice;
+                foreach(WorkshopsSubOrders wso in oocd.WorkshopsSubOrders) {
+                    res += wso.NumberOfSeats * wso.Workshops.Value;
+                }
+            }
+            Console.WriteLine($"Summary: {res}");
+            return res;
+        }
     }
 }

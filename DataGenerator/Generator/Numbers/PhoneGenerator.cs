@@ -13,7 +13,6 @@ namespace DataGenerator.Generator.Numbers {
 
         private string GenerateSingleRandPhone() {
             StringBuilder res = new StringBuilder("+48 ");
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             for (int i = 1; i <= 9; i++) {
                 res.Append(Digits[rnd.Next(0, 10)]);
                 if (i % 3 == 0 && i != 9) res.Append("-");

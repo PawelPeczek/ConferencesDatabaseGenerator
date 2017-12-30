@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.Numbers {
     abstract class NumberSource {
+        protected Random rnd = new Random(Guid.NewGuid().GetHashCode());
         protected string[] Digits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         protected string[] Letters = {
             "A", "B", "C", "D", "E", "F", "G", "H", "I",

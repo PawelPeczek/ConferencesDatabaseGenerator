@@ -12,7 +12,6 @@ namespace DataGenerator.Generator.Numbers {
         }
         private string GenerateSingleRandFax() {
             StringBuilder res = new StringBuilder("(");
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             for(int i = 0; i < 2; i++) {
                 res.Append((Digits[rnd.Next(1, 10)]));
             }
