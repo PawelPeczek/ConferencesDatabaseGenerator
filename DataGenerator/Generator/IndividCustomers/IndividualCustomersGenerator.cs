@@ -4,11 +4,8 @@ using DataGenerator.Generator.Participants;
 using DataGenerator.Generator.People;
 using DataGenerator.ORM;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.IndividCustomers {
     class IndividualCustomersGenerator {

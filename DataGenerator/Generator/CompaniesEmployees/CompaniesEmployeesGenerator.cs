@@ -1,14 +1,9 @@
-﻿using DataGenerator.Generator.Dates;
-using DataGenerator.Generator.Numbers;
-using DataGenerator.Generator.Participants;
+﻿using DataGenerator.Generator.Participants;
 using DataGenerator.Generator.People;
 using DataGenerator.ORM;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
+
 
 namespace DataGenerator.Generator.CompaniesEmployees {
     class CompaniesEmployeesGenerator {

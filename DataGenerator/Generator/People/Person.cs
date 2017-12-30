@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataGenerator.Generator.People {
+﻿namespace DataGenerator.Generator.People {
     class Person {
         public string Name { get; private set; }
         public string Surname { get; private set; }

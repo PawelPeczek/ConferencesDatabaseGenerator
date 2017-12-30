@@ -3,10 +3,7 @@ using DataGenerator.Generator.Numbers;
 using DataGenerator.Generator.People;
 using DataGenerator.ORM;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataGenerator.Generator.Orders {
     class OrdersGenerator {

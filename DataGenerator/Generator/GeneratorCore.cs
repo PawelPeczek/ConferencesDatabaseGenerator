@@ -1,20 +1,12 @@
 ﻿using DataGenerator.Generator.Companies;
 using DataGenerator.Generator.CompaniesEmployees;
 using DataGenerator.Generator.Conferences;
-using DataGenerator.Generator.Dates;
 using DataGenerator.Generator.Emails;
 using DataGenerator.Generator.IndividCustomers;
 using DataGenerator.Generator.Numbers;
 using DataGenerator.Generator.Orders;
-using DataGenerator.Generator.People;
-using DataGenerator.ORM;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static DataGenerator.Generator.Numbers.NumberGenerator;
+
 
 namespace DataGenerator.Generator {
     class GeneratorCore {
