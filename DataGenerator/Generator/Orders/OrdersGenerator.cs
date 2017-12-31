@@ -15,52 +15,60 @@ namespace DataGenerator.Generator.Orders {
             DateGen = new DateGenerator();
         }
         public void GenerateBatchOfOrders() {
-            using(ConferencesModelContext ctx = new ConferencesModelContext()) {
-                //ctx.Configuration.AutoDetectChangesEnabled = false;
+            DaysOfConf[] DaysOfConf;
+            Clients[] Clients;
+            using (ConferencesModelContext ctx = new ConferencesModelContext()) {
+                ctx.Configuration.AutoDetectChangesEnabled = false;
                 ctx.Database.Log = Console.Write;
-                DaysOfConf[] DaysOfConf = ctx.DaysOfConf.ToArray();
-                Clients[] Clients = ctx.Clients.ToArray().OrderBy(i => rnd.Next()).ToArray();
-                foreach (DaysOfConf doc in DaysOfConf) {
-                    Console.Write(".");
-                    CreateOrders(doc, Clients, ctx);
-                    Console.Write("[DB]");
-                    ctx.SaveChanges();
-                }
+                DaysOfConf = ctx.DaysOfConf.ToArray();
+                Clients = ctx.Clients.ToArray().OrderBy(i => rnd.Next()).ToArray();
+            }
+            foreach (DaysOfConf doc in DaysOfConf) {
+                Console.Write(".");
+                CreateOrders(doc, Clients);
+                Console.Write("[DB]");
             }
             
         }
 
-        private void CreateOrders(DaysOfConf doc, Clients[] Clients, ConferencesModelContext ctx) {
-            DateTime AssignBoundary = new DateTime(2018, 1, 1);
-            int NumOfChoosenParticip = 0;
-            int ClientPoiter = rnd.Next(0, Clients.Length);
-            while (NumOfChoosenParticip != doc.SpaceLimit) {
-                Clients ChoosenClient = Clients[ClientPoiter];
-                ClientPoiter = (ClientPoiter + 1) % Clients.Length;
-                ORM.Orders o = new ORM.Orders {
-                    Clients = ChoosenClient,
-                    DateOfBook = DateGen.GenerateDateBeforeGiven(doc.Date),
-                    Status = false
-                };
-                ctx.Orders.Add(o);
-                ORM.Participants[] ParticipToAssign = ctx.Participants.SqlQuery(
-                        "SELECT * FROM Participants p JOIN ParticipRegByClients pr ON p.ParticipantID = pr.ParticipantID " +
-                        $"AND pr.ClientID = {ChoosenClient.ClientID}"
-                        ).ToArray();
-                if (NumOfChoosenParticip + ParticipToAssign.Length > doc.SpaceLimit) {
-                    ParticipToAssign = ParticipToAssign.Take(doc.SpaceLimit - NumOfChoosenParticip).ToArray();
+        private void CreateOrders(DaysOfConf doc, Clients[] Clients) {
+            using (ConferencesModelContext ctx = new ConferencesModelContext()) {
+                ctx.Configuration.AutoDetectChangesEnabled = true;
+                ctx.Database.Log = Console.Write;
+                doc = ctx.DaysOfConf.SqlQuery($"SELECT TOP 1 * FROM DaysOfConf WHERE DayOfConfID = {doc.DayOfConfID}").ToArray()[0];
+                DateTime AssignBoundary = new DateTime(2018, 1, 1);
+                int NumOfChoosenParticip = 0;
+                int ClientPoiter = rnd.Next(0, Clients.Length);
+                while (NumOfChoosenParticip != doc.SpaceLimit) {
+                    Clients ChoosenClient = ctx.Clients.SqlQuery($"SELECT TOP 1 * FROM Clients WHERE ClientID = {Clients[ClientPoiter].ClientID}").ToArray()[0]; 
+                    ClientPoiter = (ClientPoiter + 1) % Clients.Length;
+                    
+                    ORM.Orders o = new ORM.Orders {
+                        Clients = ChoosenClient,
+                        DateOfBook = DateGen.GenerateDateBeforeGiven(doc.Date),
+                        Status = false
+                    };
+                    ctx.Orders.Add(o);
+                    ORM.Participants[] ParticipToAssign = ctx.Participants.SqlQuery(
+                            "SELECT * FROM Participants p JOIN ParticipRegByClients pr ON p.ParticipantID = pr.ParticipantID " +
+                            $"AND pr.ClientID = {ChoosenClient.ClientID}"
+                            ).ToArray();
+                    if (NumOfChoosenParticip + ParticipToAssign.Length > doc.SpaceLimit) {
+                        ParticipToAssign = ParticipToAssign.Take(doc.SpaceLimit - NumOfChoosenParticip).ToArray();
+                    }
+                    NumOfChoosenParticip += ParticipToAssign.Length;
+                    short NumOfStud = (short)
+                                       (from p in ParticipToAssign
+                                        where p.StudentCards.Count != 0
+                                        select p.ParticipantID).Count();
+                    short NumbOfReg = (short)(ParticipToAssign.Length - NumOfStud);
+                    OrdersOnConfDays oocd = GenerateOrdOnConfDay(o, doc, NumbOfReg, NumOfStud, ctx);
+                    if (doc.Date < AssignBoundary) {
+                        GeneratePayments(o, ctx);
+                        GenerateAssignation(ParticipToAssign, oocd, ctx);
+                    }
                 }
-                NumOfChoosenParticip += ParticipToAssign.Length;
-                short NumOfStud = (short)
-                                   (from p in ParticipToAssign
-                                   where p.StudentCards.Count != 0
-                                   select p.ParticipantID).Count();
-                short NumbOfReg = (short) (ParticipToAssign.Length - NumOfStud);
-                OrdersOnConfDays oocd = GenerateOrdOnConfDay(o, doc, NumbOfReg, NumOfStud, ctx); 
-                if (doc.Date < AssignBoundary) {
-                    GeneratePayments(o, ctx);
-                    GenerateAssignation(ParticipToAssign, oocd, ctx);
-                }
+                ctx.SaveChanges();
             }
         }
 

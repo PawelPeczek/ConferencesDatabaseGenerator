@@ -6,6 +6,6 @@
             Name = name;
             Surname = surname;
         }
-        public string ToString => Name + " " + Surname;
+        public new string ToString => Name + " " + Surname;
     }
 }

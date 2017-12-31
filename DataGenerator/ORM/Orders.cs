@@ -43,7 +43,6 @@ namespace DataGenerator.ORM
                     res += wso.NumberOfSeats * wso.Workshops.Value;
                 }
             }
-            Console.WriteLine($"Summary: {res}");
             return res;
         }
     }
