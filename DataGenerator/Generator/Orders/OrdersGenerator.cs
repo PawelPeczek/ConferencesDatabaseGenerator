@@ -19,10 +19,13 @@ namespace DataGenerator.Generator.Orders {
             Clients[] Clients;
             using (ConferencesModelContext ctx = new ConferencesModelContext()) {
                 ctx.Configuration.AutoDetectChangesEnabled = false;
-                ctx.Database.Log = Console.Write;
                 DaysOfConf = ctx.DaysOfConf.ToArray();
                 Clients = ctx.Clients.ToArray().OrderBy(i => rnd.Next()).ToArray();
             }
+            foreach(DaysOfConf doc in DaysOfConf) {
+                Console.WriteLine($"{doc.DayOfConfID}, {doc.Date}");
+            }
+            Console.ReadLine();
             foreach (DaysOfConf doc in DaysOfConf) {
                 Console.Write(".");
                 CreateOrders(doc, Clients);
@@ -34,7 +37,6 @@ namespace DataGenerator.Generator.Orders {
         private void CreateOrders(DaysOfConf doc, Clients[] Clients) {
             using (ConferencesModelContext ctx = new ConferencesModelContext()) {
                 ctx.Configuration.AutoDetectChangesEnabled = true;
-                ctx.Database.Log = Console.Write;
                 doc = ctx.DaysOfConf.SqlQuery($"SELECT TOP 1 * FROM DaysOfConf WHERE DayOfConfID = {doc.DayOfConfID}").ToArray()[0];
                 DateTime AssignBoundary = new DateTime(2018, 1, 1);
                 int NumOfChoosenParticip = 0;
